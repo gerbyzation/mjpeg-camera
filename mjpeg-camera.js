@@ -64,7 +64,7 @@ Camera.prototype._connect = function(errorCallback) {
     this.stop();
   }
 
-  var options = { url: this.url };
+  var options = { url: this.url, timeout: this.timeout };
 
   if (this.user || this.password) {
     options.auth = {
@@ -75,12 +75,13 @@ Camera.prototype._connect = function(errorCallback) {
   }
 
   this.connection = new Request(options);
-  if (errorCallback) {
-    this.connection.on('error', errorCallback);
-  } else {
-    this.connection.on('error', this.keepalive.bind(this));
-  }
-  this.keepalive();
+  this.connection.on('error', errorCallback);
+  // if (errorCallback) {
+  //   this.connection.on('error', errorCallback);
+  // } else {
+  //   this.connection.on('error', this.keepalive.bind(this));
+  // }
+  // this.keepalive();
 };
 
 /**
@@ -191,3 +192,4 @@ Camera.prototype.destroy = function() {
 };
 
 module.exports = Camera;
+// 
